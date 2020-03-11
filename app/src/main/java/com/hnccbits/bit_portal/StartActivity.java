@@ -1,8 +1,10 @@
 package com.hnccbits.bit_portal;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,12 +18,25 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class StartActivity extends AppCompatActivity {
     private EditText id,password;
     private Button login,signup;
     private FirebaseAuth auth;
     private TextView errorMessage;
+    private static final String TAG = "MyTag";
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
+        Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
+                currentUser.getEmail()+"****"+currentUser.getProviderId()+
+                "___"+currentUser.getUid());//if the user is logged in goto MainActivity
+        // PENDING to be added later
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +54,7 @@ public class StartActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(text_id)||TextUtils.isEmpty(text_password))
                 {
                     Toast.makeText(StartActivity.this,"invalid credientiala",Toast.LENGTH_SHORT).show();
-                    errorMessage.setText("Incorrect username or password");
+                    errorMessage.setText("Empty field(s)");
 
                 }
                 else
@@ -79,6 +94,7 @@ public class StartActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e)
             {
                 Toast.makeText(StartActivity.this,"not Registered ",Toast.LENGTH_SHORT).show();
+                errorMessage.setText("Incorrect password");
 
             }
         });

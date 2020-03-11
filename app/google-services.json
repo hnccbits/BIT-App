@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "194933855042-ac864510cf23baj2qcv7mf3aqvies9mt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hnccbits.bit_portal",
+            "certificate_hash": "e4a68a9976aa0a9dc5c2cbc5fdc4bc64fc47ea6a"
+          }
+        },
+        {
           "client_id": "194933855042-sqk2d1a5mgap9an5b1s19p8dqqjpfivp.apps.googleusercontent.com",
           "client_type": 3
         }

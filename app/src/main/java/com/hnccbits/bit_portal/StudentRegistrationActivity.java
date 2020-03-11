@@ -77,6 +77,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
 
                     //calling the method to create user with given Email and password
                     RegisterUser(EMAIL,PASSWORD);
+                    //commertnsdgfgskfg check git
 
                 }
 

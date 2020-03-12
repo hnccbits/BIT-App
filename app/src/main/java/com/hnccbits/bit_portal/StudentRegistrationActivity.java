@@ -75,21 +75,13 @@ public class StudentRegistrationActivity extends AppCompatActivity {
 //                else if (PASSWORD.length()<6)
 //                {
 //                    Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
+//                    password.setError("password too short");
 //                }
 //                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
 //                {
 //                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
+//                    confirmPassword.setError("same as password");
 //                }
-                else if (PASSWORD.length()<6)
-                {
-                    Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
-                    password.setError("password too short");
-                }
-                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
-                {
-                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
-                    confirmPassword.setError("same as password");
-                }
                 else
                 {
 
@@ -106,11 +98,11 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     Log.d(TAG, "   mRef   "+mRef);
                     Log.d(TAG, "  mDatabase  "+mDatabase);
 
-                    map.put("1.Name",USERNAME);
-                    map.put("2.Branch",BRANCH);
-                    map.put("3.Batch",BATCH);
-                    map.put("4.Email",EMAIL);
-                    map.put("5.Password",PASSWORD);
+                    map.put("Name",USERNAME);
+                    map.put("Branch",BRANCH);
+                    map.put("Batch",BATCH);
+                    map.put("Email",EMAIL);
+                    map.put("Password",PASSWORD);
                     //FirebaseDatabase.getInstance().getReference().child("BIT Sindri").child("STUDENT DATA").updateChildren(map);
                     mRef.child("Students").setValue(map);
                     //FirebaseDatabase.getInstance().getReference("Users").child("STUDENT DATA").updateChildren(map);
@@ -123,7 +115,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     //calling the method to create user with given Email and password
                     //RegisterUser(EMAIL,PASSWORD);
 
-                    RegisterUser(EMAIL,PASSWORD);
+                    //RegisterUser(EMAIL,PASSWORD);
 
 
                 }

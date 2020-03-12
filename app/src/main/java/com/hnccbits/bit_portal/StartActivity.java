@@ -31,10 +31,14 @@ public class StartActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
-        Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
-                currentUser.getEmail()+"****"+currentUser.getProviderId()+
-                "___"+currentUser.getUid());//if the user is logged in goto MainActivity
-        // PENDING to be added later
+        Log.d(TAG, "current User = "+currentUser);
+        if(currentUser!=null){
+            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
+                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
+                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
+            // PENDING to be added later
+        }
+
     }
 
     @Override
@@ -93,6 +97,8 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e)
             {
+//                UserRecord userRecord = FirebaseAuth.getInstance().getUser(uid);
+//                System.out.println("Successfully fetched user data: " + userRecord.getUid());
                 Toast.makeText(StartActivity.this,"not Registered ",Toast.LENGTH_SHORT).show();
                 errorMessage.setText("Incorrect password");
 

@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class StartActivity extends AppCompatActivity {
     private EditText id,password;
     private Button login,signup;
+    private TextView txtProgress;
+    private ProgressBar progressBar;
     private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class StartActivity extends AppCompatActivity {
         password=(EditText)findViewById(R.id.txt_password);
         login=(Button)findViewById(R.id.btn_ok);
         signup=(Button)findViewById(R.id.btn_signup);
+        txtProgress=(TextView)findViewById(R.id.txt_progress);
+        progressBar=(ProgressBar)findViewById(R.id.progress_bar);
 
         auth=FirebaseAuth.getInstance(); //creating an object [auth] of [FirebaseAuth] class.
         Toast.makeText(StartActivity.this,"use Email as UserName",Toast.LENGTH_LONG).show();
@@ -39,10 +45,15 @@ public class StartActivity extends AppCompatActivity {
                 String text_password=password.getText().toString();
                 if(TextUtils.isEmpty(text_id)||TextUtils.isEmpty(text_password))
                 {
+                    id.setError("enter name");
+                    password.setError("enter password");
                     Toast.makeText(StartActivity.this,"invalid credientiala",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
+                    progressBar.setVisibility(View.VISIBLE);
+                    txtProgress.setText("Loading... please wait.");
+                    txtProgress.setVisibility(View.VISIBLE);
                     loginUser(text_id, text_password);
                 }
             }
@@ -76,6 +87,8 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e)
             {
+                progressBar.setVisibility(View.GONE);
+                txtProgress.setVisibility(View.GONE);
                 Toast.makeText(StartActivity.this,"not Registered ",Toast.LENGTH_SHORT).show();
             }
         });

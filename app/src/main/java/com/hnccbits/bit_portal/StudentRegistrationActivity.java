@@ -3,6 +3,7 @@ package com.hnccbits.bit_portal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -22,7 +24,12 @@ import java.util.HashMap;
 public class StudentRegistrationActivity extends AppCompatActivity {
     private EditText name,branch,batch,email,password,confirmPassword;
     private Button signup;
+    FirebaseDatabase mDatabase;
+    DatabaseReference mRef;
     private FirebaseAuth auth; //declearing of object [auth] of [FirebaseAuth] class
+    private static final String TAG = "MyTag";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +42,8 @@ public class StudentRegistrationActivity extends AppCompatActivity {
         password=(EditText)findViewById(R.id.txt_password);
         confirmPassword=(EditText)findViewById(R.id.txt_confirm_password);
         signup=(Button)findViewById(R.id.btn_studentSignup);
+        mDatabase=FirebaseDatabase.getInstance();
+        mRef=mDatabase.getReference("Users");
 
         auth=FirebaseAuth.getInstance(); //creating an object [auth] of [FirebaseAuth] class.
 
@@ -54,26 +63,28 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                 {
                     Toast.makeText(StudentRegistrationActivity.this,"invalid Credentials",Toast.LENGTH_SHORT).show();
                 }
-                else if (PASSWORD.length()<6)
-                {
-                    Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
-                }
-                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
-                {
-                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
-                }
+//                else if (PASSWORD.length()<6)
+//                {
+//                    Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
+//                }
+//                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
+//                {
+//                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
+//                }
                 else
                 {
                     // storing of data in real time  @Firebase
                     HashMap<String,Object> map=new HashMap<>();
-                    map.put("1.Name",USERNAME);
-                    map.put("2.Branch",BRANCH);
-                    map.put("3.Batch",BATCH);
-                    map.put("4.Email",EMAIL);
-                    map.put("5.Password",PASSWORD);
+                    map.put("Name",USERNAME);
+                    map.put("Branch",BRANCH);
+                    map.put("Batch",BATCH);
+                    map.put("Email",EMAIL);
+                    map.put("Password",PASSWORD);
+                    Log.d(TAG, "   mRef   "+mRef);
+                    Log.d(TAG, "  mDatabase  "+mDatabase);
                     //FirebaseDatabase.getInstance().getReference().child("BIT Sindri").child("STUDENT DATA").updateChildren(map);
-
-                    FirebaseDatabase.getInstance().getReference("User Database").child("STUDENT DATA").updateChildren(map);
+                    mRef.child("Students").setValue(map);
+                    //FirebaseDatabase.getInstance().getReference("Users").child("STUDENT DATA").updateChildren(map);
                     /**
                     *Data not saved to Database
                     *Major Problem
@@ -81,7 +92,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     */
 
                     //calling the method to create user with given Email and password
-                    RegisterUser(EMAIL,PASSWORD);
+                    //RegisterUser(EMAIL,PASSWORD);
 
                 }
 

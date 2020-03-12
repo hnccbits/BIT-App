@@ -1,22 +1,23 @@
 package com.hnccbits.bit_portal;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class StartActivity extends AppCompatActivity {
     private EditText id,password;
@@ -24,10 +25,28 @@ public class StartActivity extends AppCompatActivity {
     private TextView txtProgress;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private TextView errorMessage;
+    private static final String TAG = "MyTag";
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
+        Log.d(TAG, "current User = "+currentUser);
+        if(currentUser!=null){
+            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
+                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
+                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
+            // PENDING to be added later
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
 
         id=(EditText)findViewById(R.id.txt_username);
         password=(EditText)findViewById(R.id.txt_password);
@@ -35,6 +54,7 @@ public class StartActivity extends AppCompatActivity {
         signup=(Button)findViewById(R.id.btn_signup);
         txtProgress=(TextView)findViewById(R.id.txt_progress);
         progressBar=(ProgressBar)findViewById(R.id.progress_bar);
+        initializeVariables();
 
         auth=FirebaseAuth.getInstance(); //creating an object [auth] of [FirebaseAuth] class.
         Toast.makeText(StartActivity.this,"use Email as UserName",Toast.LENGTH_LONG).show();
@@ -48,6 +68,8 @@ public class StartActivity extends AppCompatActivity {
                     id.setError("enter name");
                     password.setError("enter password");
                     Toast.makeText(StartActivity.this,"invalid credientiala",Toast.LENGTH_SHORT).show();
+                    errorMessage.setText("Empty field(s)");
+
                 }
                 else
                 {
@@ -68,6 +90,7 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
+
     private void loginUser(String text_id, String text_password)
     {
 
@@ -77,7 +100,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult)
             {
-
+                errorMessage.setText("");
                 Toast.makeText(StartActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(StartActivity.this, MainActivity.class));
                 finish();
@@ -87,12 +110,25 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e)
             {
+
                 progressBar.setVisibility(View.GONE);
                 txtProgress.setVisibility(View.GONE);
+//                UserRecord userRecord = FirebaseAuth.getInstance().getUser(uid);
+//                System.out.println("Successfully fetched user data: " + userRecord.getUid());
                 Toast.makeText(StartActivity.this,"not Registered ",Toast.LENGTH_SHORT).show();
+                errorMessage.setText("Incorrect password");
+
             }
         });
 
 
+    }
+
+    private void initializeVariables() {
+        id=(EditText)findViewById(R.id.txt_username);
+        password=(EditText)findViewById(R.id.txt_password);
+        login=(Button)findViewById(R.id.btn_ok);
+        signup=(Button)findViewById(R.id.btn_signup);
+        errorMessage=findViewById(R.id.error_message);
     }
 }

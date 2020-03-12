@@ -73,7 +73,12 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     map.put("5.Password",PASSWORD);
                     //FirebaseDatabase.getInstance().getReference().child("BIT Sindri").child("STUDENT DATA").updateChildren(map);
 
-                    FirebaseDatabase.getInstance().getReference().child("BIT Sindri").child("STUDENT DATA").updateChildren(map);
+                    FirebaseDatabase.getInstance().getReference("User Database").child("STUDENT DATA").updateChildren(map);
+                    /**
+                    *Data not saved to Database
+                    *Major Problem
+                    *Solve
+                    */
 
                     //calling the method to create user with given Email and password
                     RegisterUser(EMAIL,PASSWORD);

@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,8 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class StudentRegistrationActivity extends AppCompatActivity {
-    private EditText name,branch,batch,email,password,confirmPassword;
+    public EditText email;
+    private EditText name,branch,batch,password,confirmPassword;
     private Button signup;
+    private TextView txtProgress;
+    private ProgressBar progressBar;
     private FirebaseAuth auth; //declearing of object [auth] of [FirebaseAuth] class
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,9 @@ public class StudentRegistrationActivity extends AppCompatActivity {
         password=(EditText)findViewById(R.id.txt_password);
         confirmPassword=(EditText)findViewById(R.id.txt_confirm_password);
         signup=(Button)findViewById(R.id.btn_studentSignup);
+        txtProgress=(TextView)findViewById(R.id.txt_progress);
+        progressBar=(ProgressBar)findViewById(R.id.progress_bar);
+
 
         auth=FirebaseAuth.getInstance(); //creating an object [auth] of [FirebaseAuth] class.
 
@@ -53,19 +61,27 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                         ||TextUtils.isEmpty(EMAIL)||TextUtils.isEmpty(CONFIRM_PASSWORD))
                 {
                     Toast.makeText(StudentRegistrationActivity.this,"invalid Credentials",Toast.LENGTH_SHORT).show();
+
                 }
                 else if (PASSWORD.length()<6)
                 {
                     Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
+                    password.setError("password too short");
                 }
                 else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
                 {
                     Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
+                    confirmPassword.setError("same as password");
                 }
                 else
                 {
+
+                    progressBar.setVisibility(View.VISIBLE);
+                    txtProgress.setText("Registering... please wait.");
+                    txtProgress.setVisibility(View.VISIBLE);
                     // storing of data in real time  @Firebase
                     HashMap<String,Object> map=new HashMap<>();
+
                     map.put("1.Name",USERNAME);
                     map.put("2.Branch",BRANCH);
                     map.put("3.Batch",BATCH);
@@ -81,7 +97,9 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     */
 
                     //calling the method to create user with given Email and password
+
                     RegisterUser(EMAIL,PASSWORD);
+
 
                 }
 
@@ -90,7 +108,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
 
     }
 
-    private void RegisterUser(String email, String password) {
+    private void RegisterUser(final String email, String password) {
 
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(StudentRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -103,8 +121,14 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                 }
                 else
                 {
-
+                    progressBar.setVisibility(View.GONE);
+                    txtProgress.setVisibility(View.GONE);
                     Toast.makeText(StudentRegistrationActivity.this,"Registration Failed",Toast.LENGTH_SHORT).show();
+                   EditText email;
+                   email=(EditText)findViewById(R.id.txt_email);
+                   email.setError("enter a vaild E-mail address");
+
+
                 }
             }
         });

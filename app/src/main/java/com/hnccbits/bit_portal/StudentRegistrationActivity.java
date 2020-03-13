@@ -72,16 +72,16 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     Toast.makeText(StudentRegistrationActivity.this,"invalid Credentials",Toast.LENGTH_SHORT).show();
 
                 }
-//                else if (PASSWORD.length()<6)
-//                {
-//                    Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
-//                    password.setError("password too short");
-//                }
-//                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
-//                {
-//                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
-//                    confirmPassword.setError("same as password");
-//                }
+                else if (PASSWORD.length()<6)
+                {
+                    Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
+                    password.setError("password too short");
+                }
+                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
+                {
+                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
+                    confirmPassword.setError("same as password");
+                }
                 else
                 {
 
@@ -115,7 +115,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     //calling the method to create user with given Email and password
                     //RegisterUser(EMAIL,PASSWORD);
 
-                    //RegisterUser(EMAIL,PASSWORD);
+                    RegisterUser(EMAIL,PASSWORD);
 
 
                 }
@@ -141,9 +141,9 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     txtProgress.setVisibility(View.GONE);
                     Toast.makeText(StudentRegistrationActivity.this,"Registration Failed",Toast.LENGTH_SHORT).show();
-                   EditText email;
-                   email=(EditText)findViewById(R.id.txt_email);
-                   email.setError("enter a vaild E-mail address");
+                    EditText email;
+                    email=(EditText)findViewById(R.id.txt_email);
+                    email.setError("enter a vaild E-mail address");
 
 
                 }

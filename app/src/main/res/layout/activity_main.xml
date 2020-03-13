@@ -7,11 +7,58 @@
     android:orientation="vertical"
     android:background="#ffffff"
     tools:context=".MainActivity">
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.15"
-        ></RelativeLayout>
+        >
+
+        <ImageView
+            android:id="@+id/header_logo"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:padding="10dp"
+            android:src="@drawable/bitlogo"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/college_name"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/college_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:text="BIT Sindri"
+            android:textColor="#000000"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.573"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.492"></TextView>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/header_logo"
+            android:gravity="center"
+            android:text="Main Menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.211"
+            app:layout_constraintStart_toEndOf="@+id/header_logo"
+            app:layout_constraintTop_toBottomOf="@+id/college_name"
+            app:layout_constraintVertical_bias="0.0"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:layout_width="match_parent"
@@ -51,23 +98,24 @@
         >
 
     </Button>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_margin="18dp"
-        android:shadowColor="#ff1e56"
-        android:background="@drawable/border"
-        android:shadowDy="@android:integer/config_longAnimTime"
-        android:shadowDx="@android:integer/config_longAnimTime"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:shadowColor="#ff1e56"
+        android:text=""
+        android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="40dp"
-        android:text="Updates"
-        >
+        android:textColor="#000000"
+        android:textSize="40sp"
+        android:textStyle="bold">
 
     </Button>
 

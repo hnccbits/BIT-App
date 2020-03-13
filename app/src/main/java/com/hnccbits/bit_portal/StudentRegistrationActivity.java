@@ -24,8 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class StudentRegistrationActivity extends AppCompatActivity {
-    public EditText email;
-    private EditText name,branch,batch,password,confirmPassword;
+    public EditText email,password;
+    private EditText name,branch,batch,confirmPassword;
     private Button signup;
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
@@ -77,43 +77,43 @@ public class StudentRegistrationActivity extends AppCompatActivity {
 //                    Toast.makeText(StudentRegistrationActivity.this,"password too short",Toast.LENGTH_SHORT).show();
 //                    password.setError("password too short");
 //                }
-//                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
-//                {
-//                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
-//                    confirmPassword.setError("same as password");
-//                }
+                else if (!TextUtils.equals(PASSWORD,CONFIRM_PASSWORD))
+                {
+                    Toast.makeText(StudentRegistrationActivity.this,"confirm password should be same as password",Toast.LENGTH_SHORT).show();
+                    confirmPassword.setError("same as password");
+                 }
                 else
                 {
 
                     progressBar.setVisibility(View.VISIBLE);
                     txtProgress.setText("Registering... please wait.");
                     txtProgress.setVisibility(View.VISIBLE);
-                    // storing of data in real time  @Firebase
-                    HashMap<String,Object> map=new HashMap<>();
-                    map.put("Name",USERNAME);
-                    map.put("Branch",BRANCH);
-                    map.put("Batch",BATCH);
-                    map.put("Email",EMAIL);
-                    map.put("Password",PASSWORD);
-                    Log.d(TAG, "   mRef   "+mRef);
-                    Log.d(TAG, "  mDatabase  "+mDatabase);
-
-                    map.put("Name",USERNAME);
-                    map.put("Branch",BRANCH);
-                    map.put("Batch",BATCH);
-                    map.put("Email",EMAIL);
-                    map.put("Password",PASSWORD);
-                    //FirebaseDatabase.getInstance().getReference().child("BIT Sindri").child("STUDENT DATA").updateChildren(map);
-                    mRef.child("Students").setValue(map);
-                    //FirebaseDatabase.getInstance().getReference("Users").child("STUDENT DATA").updateChildren(map);
-                    /**
-                    *Data not saved to Database
-                    *Major Problem
-                    *Solve
-                    */
+//                    // storing of data in real time  @Firebase
+//                    HashMap<String,Object> map=new HashMap<>();
+//                    map.put("Name",USERNAME);
+//                    map.put("Branch",BRANCH);
+//                    map.put("Batch",BATCH);
+//                    map.put("Email",EMAIL);
+//                    map.put("Password",PASSWORD);
+//                    Log.d(TAG, "   mRef   "+mRef);
+//                    Log.d(TAG, "  mDatabase  "+mDatabase);
+//
+//                    map.put("Name",USERNAME);
+//                    map.put("Branch",BRANCH);
+//                    map.put("Batch",BATCH);
+//                    map.put("Email",EMAIL);
+//                    map.put("Password",PASSWORD);
+//                    //FirebaseDatabase.getInstance().getReference().child("BIT Sindri").child("STUDENT DATA").updateChildren(map);
+//                    mRef.child("Students").setValue(map);
+//                    //FirebaseDatabase.getInstance().getReference("Users").child("STUDENT DATA").updateChildren(map);
+//                    /**
+//                    *Data not saved to Database
+//                    *Major Problem
+//                    *Solve
+//                    */
 
                     //calling the method to create user with given Email and password
-                    //RegisterUser(EMAIL,PASSWORD);
+                    RegisterUser(USERNAME,BRANCH,BATCH,EMAIL,PASSWORD);
 
                     //RegisterUser(EMAIL,PASSWORD);
 
@@ -125,13 +125,40 @@ public class StudentRegistrationActivity extends AppCompatActivity {
 
     }
 
-    private void RegisterUser(final String email, String password) {
+    private void RegisterUser(final String username, final String branch, final String batch, final String email, final String password) {
 
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(StudentRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    // storing of data in real time  @Firebase
+                    HashMap<String,Object> map=new HashMap<>();
+                    map.put("Name",username);
+                    map.put("Branch",branch);
+                    map.put("Batch",batch);
+                    map.put("Email",email);
+                    map.put("Password",password);
+                    Log.d(TAG, "   mRef   "+mRef);
+                    Log.d(TAG, "  mDatabase  "+mDatabase);
+
+                    map.put("Name",username);
+                    map.put("Branch",branch);
+                    map.put("Batch",batch);
+                    map.put("Email",email);
+                    map.put("Password",password);
+                    //FirebaseDatabase.getInstance().getReference().child("BIT Sindri").child("STUDENT DATA").updateChildren(map);
+                    mRef.child("Students").setValue(map);
+                    //FirebaseDatabase.getInstance().getReference("Users").child("STUDENT DATA").updateChildren(map);
+                    /**
+                     *Data not saved to Database
+                     *Major Problem
+                     *Solve
+                     */
+                    /**
+                    *   NOW ONLY SUCCESSFULLY REGISTERED USERS DATA WILL BE STORED.
+                     *  but,Still data overide the previous EXISTING DATA .
+                     * */
                     Toast.makeText(StudentRegistrationActivity.this,"Registration Successful",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(StudentRegistrationActivity.this, MainActivity.class));
                     finish();
@@ -141,8 +168,10 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     txtProgress.setVisibility(View.GONE);
                     Toast.makeText(StudentRegistrationActivity.this,"Registration Failed",Toast.LENGTH_SHORT).show();
-                   EditText email;
+                   EditText email,password;
                    email=(EditText)findViewById(R.id.txt_email);
+                    password=(EditText)findViewById(R.id.txt_password);
+                    password.setError("password too short");
                    email.setError("enter a vaild E-mail address");
 
 

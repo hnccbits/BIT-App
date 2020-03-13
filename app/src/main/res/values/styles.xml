@@ -12,7 +12,6 @@
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">#000000</item>
         <item name="android:windowTranslucentNavigation">true</item>
-<!--        <item name="navigationIcon"></item>-->
     </style>
 
 </resources>

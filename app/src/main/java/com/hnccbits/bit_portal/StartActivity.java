@@ -31,6 +31,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //setContentView(R.layout.ac);
         FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
         Log.d(TAG, "current User = "+currentUser);
         if(currentUser!=null){

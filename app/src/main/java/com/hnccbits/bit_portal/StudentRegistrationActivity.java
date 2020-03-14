@@ -144,7 +144,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
                     EditText email;
                     email=(EditText)findViewById(R.id.txt_email);
                     email.setError("enter a vaild E-mail address");
-// comment added
+
 
                 }
             }

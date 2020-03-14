@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="120dp"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 <LinearLayout
@@ -18,9 +18,9 @@
 
     <ImageView
         android:id="@+id/applogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:src="@android:drawable/btn_star_big_on"/>
+        android:layout_width="150dp"
+        android:layout_height="150"
+        android:src="@drawable/bitlogo"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:text="NOT REGISTERED?"
         android:gravity="center"
-        android:layout_marginTop="65dp"/>
+        android:layout_marginTop="35dp"/>
     <Button
         android:id="@+id/btn_signup"
         android:layout_width="wrap_content"

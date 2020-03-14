@@ -38,6 +38,7 @@ public class StartActivity extends AppCompatActivity {
                     currentUser.getEmail()+"****"+currentUser.getProviderId()+
                     "___"+currentUser.getUid());//if the user is logged in goto MainActivity
             // PENDING to be added later
+            startActivity(new Intent(StartActivity.this, MainActivity.class));
         }
 
     }

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:id="@+id/data_image"
-        android:src="@drawable/News"/>
+        android:src="@drawable/common_google_signin_btn_icon_dark_normal"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

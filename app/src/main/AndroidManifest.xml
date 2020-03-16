@@ -11,14 +11,10 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".RecycleViewActivity"></activity>
         <activity android:name=".AlumniRegisterationActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".StudentRegistrationActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity
-            android:name=".StartActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

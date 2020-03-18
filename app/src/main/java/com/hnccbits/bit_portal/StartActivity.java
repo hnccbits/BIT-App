@@ -3,11 +3,16 @@ package com.hnccbits.bit_portal;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,27 +27,30 @@ import com.google.firebase.auth.FirebaseUser;
 public class StartActivity extends AppCompatActivity {
     private EditText id,password;
     private Button login,signup;
-    private TextView txtProgress;
+    private ImageView img;
+    private LinearLayout linearLayout;
+    private TextView txtProgress,txt_aninate;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
     private TextView errorMessage;
     private static final String TAG = "MyTag";
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //setContentView(R.layout.ac);
-        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
-        Log.d(TAG, "current User = "+currentUser);
-        if(currentUser!=null){
-            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
-                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
-                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
-            // PENDING to be added later
-            startActivity(new Intent(StartActivity.this, MainActivity.class));
-        }
 
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
+//        Log.d(TAG, "current User = "+currentUser);
+//        if(currentUser!=null){
+//            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
+//                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
+//                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
+//            // PENDING to be added later
+//            startActivity(new Intent(StartActivity.this, MainActivity.class));
+//        }
+//
+//    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +64,28 @@ public class StartActivity extends AppCompatActivity {
         signup=(Button)findViewById(R.id.btn_signup);
         txtProgress=(TextView)findViewById(R.id.txt_progress);
         progressBar=(ProgressBar)findViewById(R.id.progress_bar);
+        img=(ImageView)findViewById(R.id.icon_animate);
+        linearLayout=(LinearLayout)findViewById(R.id.linear);
+        txt_aninate=(TextView)findViewById(R.id.text_animate);
+
         initializeVariables();
+
+        linearLayout.animate().alpha(0f).setDuration(1);
+
+        TranslateAnimation animation=new TranslateAnimation(0,0,-900,-200);
+        animation.setDuration(2200);
+        animation.setFillAfter(false);
+
+        animation.setAnimationListener(new MyAnimationListener());
+
+
+        TranslateAnimation animation2=new TranslateAnimation(0,0,900,150);
+        animation2.setDuration(2200);
+        animation2.setFillAfter(false);
+        animation2.setAnimationListener(new MyAnimationListener());
+        txt_aninate.setAnimation(animation2);
+        img.setAnimation(animation);
+
 
         auth=FirebaseAuth.getInstance(); //creating an object [auth] of [FirebaseAuth] class.
         Toast.makeText(StartActivity.this,"use Email as UserName",Toast.LENGTH_LONG).show();
@@ -124,6 +153,30 @@ public class StartActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener
+    {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+
+        public void onAnimationEnd(Animation animation) {
+            img.clearAnimation();
+            img.setVisibility(View.INVISIBLE);
+            txt_aninate.clearAnimation();
+            txt_aninate.setVisibility(View.INVISIBLE);
+            linearLayout.animate().alpha(1f).setDuration(1000);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 
     private void initializeVariables() {

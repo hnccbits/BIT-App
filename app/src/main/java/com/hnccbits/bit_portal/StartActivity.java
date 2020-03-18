@@ -35,6 +35,7 @@ public class StartActivity extends AppCompatActivity {
     private TextView errorMessage;
     private static final String TAG = "MyTag";
 
+
 //    @Override
 //    protected void onStart() {
 //        super.onStart();
@@ -49,6 +50,7 @@ public class StartActivity extends AppCompatActivity {
 //        }
 //
 //    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

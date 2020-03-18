@@ -36,20 +36,20 @@ public class StartActivity extends AppCompatActivity {
     private static final String TAG = "MyTag";
 
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
-//        Log.d(TAG, "current User = "+currentUser);
-//        if(currentUser!=null){
-//            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
-//                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
-//                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
-//            // PENDING to be added later
-//            startActivity(new Intent(StartActivity.this, MainActivity.class));
-//        }
-//
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
+        Log.d(TAG, "current User = "+currentUser);
+        if(currentUser!=null){
+            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
+                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
+                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
+            // PENDING to be added later
+            startActivity(new Intent(StartActivity.this, MainActivity.class));
+        }
+
+    }
 
 
     @Override

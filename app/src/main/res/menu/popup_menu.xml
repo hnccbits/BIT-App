@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Item1"
+        android:title="Do This"/>
+    <item
+        android:id="@+id/Item2"
+        android:title="Do That"/>
+    <item
+        android:id="@+id/Item3"
+        android:title="Write to us / Feedback / Suggestions"/>
+    <item
+        android:id="@+id/Item4"
+        android:title="Rate us on Play Store"/>
+</menu>

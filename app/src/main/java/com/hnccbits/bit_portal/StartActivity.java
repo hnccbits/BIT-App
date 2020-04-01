@@ -39,15 +39,16 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
-        Log.d(TAG, "current User = "+currentUser);
-        if(currentUser!=null){
-            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
-                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
-                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
-            // PENDING to be added later
-            startActivity(new Intent(StartActivity.this, MainActivity.class));
-        }
+        // Not a good place to check this.
+//        FirebaseUser currentUser = auth.getCurrentUser();//check if the user is already logged in
+//        Log.d(TAG, "current User = "+currentUser);
+//        if(currentUser!=null){
+//            Log.d(TAG, "onStart: "+currentUser.getDisplayName()+"---"+
+//                    currentUser.getEmail()+"****"+currentUser.getProviderId()+
+//                    "___"+currentUser.getUid());//if the user is logged in goto MainActivity
+//            // PENDING to be added later
+//            startActivity(new Intent(StartActivity.this, MainActivity.class));
+//        }
 
     }
 
@@ -55,6 +56,15 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        auth=FirebaseAuth.getInstance();
+        // Checking if user is already logged in.
+        // It should be done here before we load layouts and animations.
+        // We should make a splash screen for period in which it is skipping this activity and loading MainActivity
+        if (auth.getCurrentUser() != null){
+            Log.d(TAG, "onCreate: User already logged in, Launching MainActivity");
+            startActivity(new Intent(this, MainActivity.class));
+        }
+
         setContentView(R.layout.activity_start);
 
 
@@ -87,7 +97,6 @@ public class StartActivity extends AppCompatActivity {
         img.setAnimation(animation);
 
 
-        auth=FirebaseAuth.getInstance(); //creating an object [auth] of [FirebaseAuth] class.
         Toast.makeText(StartActivity.this,"use Email as UserName",Toast.LENGTH_LONG).show();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
